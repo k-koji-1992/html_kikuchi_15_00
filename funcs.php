@@ -1,9 +1,18 @@
-
 <?php
-function db_conn(){
+
+
+//XSS対応（ echoする場所で使用！それ以外はNG ）
+function h($str)
+{
+    return htmlspecialchars($str, ENT_QUOTES);
+}
+
+//DB接続関数：db_conn()
+function db_conn()
+{
     try {
         //localhostの場合
-        $db_name = "gs_db00";    //データベース名
+        $db_name = "gs_db";    //データベース名
         $db_id   = "root";      //アカウント名
         $db_pw   = "";          //パスワード：XAMPPはパスワード無しに修正してください。
         $db_host = "localhost"; //DBホスト
@@ -12,7 +21,7 @@ function db_conn(){
         if ($_SERVER["HTTP_HOST"] != 'localhost') {
             $db_name = "k-koji_unit1";  //データベース名
             $db_id   = "k-koji";  //アカウント名（さくらコントロールパネルに表示されています）
-            $db_pw   = "53r4ijgAXtnVUhY_";  //パスワード(さくらサーバー最初にDB作成する際に設定したパスワード)
+            $db_pw   = "";  //パスワード(さくらサーバー最初にDB作成する際に設定したパスワード)
             $db_host = "mysql57.k-koji.sakura.ne.jp"; //例）mysql**db.ne.jp...
         }
         return new PDO('mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host, $db_id, $db_pw);
@@ -21,13 +30,28 @@ function db_conn(){
     }
 }
 
-function sql_error($stmt){
+//SQLエラー関数：sql_error($stmt)
+function sql_error($stmt)
+{
     $error = $stmt->errorInfo();
-    exit("SQLError:" . print_r($error, true));
+    exit("SQLError:" . $error[2]);
 }
 
-function redirect($file_name){
+
+//リダイレクト関数: redirect($file_name)
+function redirect($file_name)
+{
     header("Location: " . $file_name);
     exit();
 }
-?>
+
+
+function sschk()
+{
+    if ($_SESSION["chk_ssid"] != session_id()) {
+        exit("LOGIN ERROR");
+    } else {
+        session_regenerate_id(true);
+        $_SESSION["chk_ssid"] = session_id();
+    }
+}

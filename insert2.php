@@ -8,9 +8,15 @@ $lpw= $_POST['lpw'];
 include("funcs.php");
 $pdo = db_conn();
 
+// //2. DB接続します
+// try {
+//   //Password:MAMP='root',XAMPP=''
+//   $pdo = new PDO('mysql:dbname=k-koji_unit1;charset=utf8;host=mysql57.k-koji.sakura.ne.jp','k-koji','53r4ijgAXtnVUhY_');
+// } catch (PDOException $e) {
+//   exit('DBConnection Error:'.$e->getMessage());
+// }
 
-
-//2．データ登録SQL作成
+//３．データ登録SQL作成
 $sql = "INSERT INTO `gs_user_table`(name, lid, lpw) VALUES (:name,:lid,:lpw)";
 $stmt = $pdo->prepare($sql); // statement
 $stmt->bindValue(':name', $name, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
@@ -18,7 +24,7 @@ $stmt->bindValue(':lid', $lid, PDO::PARAM_STR);  //Integer（数値の場合 PDO
 $stmt->bindValue(':lpw', $lpw, PDO::PARAM_STR);  //Integer（数値の場合 PDO::PARAM_INT)
 $status = $stmt->execute();
 
-//3．データ登録処理後
+//４．データ登録処理後
 if($status==false){
   //*** function化を使う！*****************
   sql_error($stmt);

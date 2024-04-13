@@ -1,16 +1,49 @@
-
 <!DOCTYPE html>
-<html lang="ja">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>ログイン</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <style>
+    div {
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+  <title>ログイン</title>
 </head>
+
 <body>
-    <h1>ログイン</h1>
-    <form action="login_process.php" method="post">
-        <input type="text" name="username" placeholder="ユーザー名" required>
-        <input type="password" name="password" placeholder="パスワード" required>
-        <button type="submit">ログイン</button>
-    </form>
+
+
+  <header>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.php">依頼登録</a>
+          <a class="navbar-brand" href="select.php">依頼一覧</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- lLOGINogin_act.php は認証処理用のPHPです。 -->
+  <form name="form" action="login_act.php" method="post">
+    ID:<input type="text" name="lid" />
+    <p>
+
+    </p>
+    PW:<input type="password" name="lpw" />
+    <p>
+
+    </p>
+    <input type="submit" value="LOGIN" />
+  </form>
+
+
 </body>
+
 </html>
